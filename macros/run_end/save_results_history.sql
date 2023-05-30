@@ -20,7 +20,7 @@
             {% do re_data.insert_list_to_table(
                 ref('re_data_test_history'),
                 tests,
-                ['table_name', 'column_name', 'test_name', 'status', 'execution_time', 'message', 'tested_records_count' ,'failures_count', 'failures_json', 'failures_table', 'severity', 'compiled_sql', 'run_at','additional_runtime_metadata'],
+                ['table_name', 'column_name', 'test_name', 'status', 'execution_time', 'message', 'tested_records_count' ,'failures_count', 'failures_json', 'failures_table', 'severity', 'compiled_sql', 'run_at','additional_runtime_metadata', 'test_params'],
                 { 'run_at': timestamp_type() }
             ) %}
         {% endif %}
@@ -107,6 +107,16 @@
         {% set additional_runtime_metadata = tojson(additional_runtime_metadata) %}
     {% endif %}
 
+    {% if var.has_var('re_data:save_test_history_test_params') %}
+        {% set test_params = {} %}
+        {% for _var in var('re_data:save_test_history_test_params') %}
+            {% if var.has_var(_var) %}
+                {% do test_params.update({_var:var(_var)}) %}
+            {% endif %}
+        {% endfor %}      
+        {% set test_params = tojson(test_params) %}
+    {% endif %}
+
     {{ return ({
         'table_name': table_name,
         'column_name': el.node.column_name or none,
@@ -121,7 +131,8 @@
         'severity': el.node.config.severity,
         'compiled_sql': el.node.compiled_sql or el.node.compiled_code or none,
         'run_at': run_started_at_str,
-        'additional_runtime_metadata': additional_runtime_metadata or none
+        'additional_runtime_metadata': additional_runtime_metadata or none,
+        'test_params': test_params or none
         })
     }}
 

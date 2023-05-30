@@ -20,6 +20,7 @@
         ('severity', 'string'),
         ('compiled_sql', 'long_string'),
         ('run_at', 'timestamp'),
-        ('additional_runtime_metadata', 'long_string')
+        ('additional_runtime_metadata', 'long_string'),
+        ('test_params', 'long_string')
     ])
 }}
