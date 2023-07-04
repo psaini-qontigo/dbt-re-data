@@ -21,6 +21,8 @@
         ('compiled_sql', 'long_string'),
         ('run_at', 'timestamp'),
         ('additional_runtime_metadata', 'long_string'),
-        ('test_params', 'long_string')
+        ('test_params', 'long_string'),
+        ('tags', 'long_string'),
+        ('test_config', 'long_string')
     ])
 }}

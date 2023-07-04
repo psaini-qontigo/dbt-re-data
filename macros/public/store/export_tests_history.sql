@@ -15,7 +15,9 @@
             severity, 
             compiled_sql,
             additional_runtime_metadata,
-            test_params
+            test_params,
+            tags,
+            test_config
         from
             {{ ref('re_data_test_history') }}
         where {{ in_date_window('run_at', start_date, end_date) }}

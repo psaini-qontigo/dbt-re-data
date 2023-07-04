@@ -20,7 +20,7 @@
             {% do re_data.insert_list_to_table(
                 ref('re_data_test_history'),
                 tests,
-                ['table_name', 'column_name', 'test_name', 'status', 'execution_time', 'message', 'tested_records_count' ,'failures_count', 'failures_json', 'failures_table', 'severity', 'compiled_sql', 'run_at','additional_runtime_metadata', 'test_params'],
+                ['table_name', 'column_name', 'test_name', 'status', 'execution_time', 'message', 'tested_records_count' ,'failures_count', 'failures_json', 'failures_table', 'severity', 'compiled_sql', 'run_at','additional_runtime_metadata', 'test_params', 'tags', 'test_config'],
                 { 'run_at': timestamp_type() }
             ) %}
         {% endif %}
@@ -132,7 +132,10 @@
         'compiled_sql': el.node.compiled_sql or el.node.compiled_code or none,
         'run_at': run_started_at_str,
         'additional_runtime_metadata': additional_runtime_metadata or none,
-        'test_params': test_params or none
+        'test_params': test_params or none,
+        'tags': el.node.tags or none,
+        'test_config': el.node.config.to_dict(omit_none=True) or none,
+
         })
     }}
 
